@@ -24,4 +24,9 @@ class Event extends Model
         'end_date' => 'datetime',
         'is_featured' => 'boolean',
     ];
+
+    public function getRouteKeyName(): string
+{
+    return 'slug';
+}
 }

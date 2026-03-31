@@ -38,4 +38,9 @@ class Artwork extends Model
     {
         return $this->hasMany(ArtworkImage::class);
     }
+
+    public function getRouteKeyName(): string
+{
+    return 'slug';
+}
 }

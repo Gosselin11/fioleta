@@ -1,20 +1,26 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\ArtworkController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomeController::class)->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/galerie', [ArtworkController::class, 'index'])->name('artworks.index');
+Route::get('/galerie/{artwork:slug}', [ArtworkController::class, 'show'])->name('artworks.show');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/a-propos', AboutController::class)->name('about');
+
+Route::get('/evenements', [EventController::class, 'index'])->name('events.index');
+Route::get('/evenements/{event:slug}', [EventController::class, 'show'])->name('events.show');
+
+Route::get('/archives', ArchiveController::class)->name('archives.index');
+
+Route::view('/dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 require __DIR__.'/auth.php';
